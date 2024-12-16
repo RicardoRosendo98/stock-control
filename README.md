@@ -25,3 +25,16 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Prerequisites
+
+To run this project locally, ensure you have the following installed:
+
+Node.js (version 16 or later recommended)
+
+Angular CLI (version 15.2.11 or compatible)
+
+Install project dependencies by running:
+
+```
+npm install
