@@ -38,3 +38,8 @@ Install project dependencies by running:
 
 ```
 npm install
+```
+
+## Login screen
+
+![stock](https://github.com/user-attachments/assets/f463c4f7-240c-441a-8fa9-0c1bde13cf62)
