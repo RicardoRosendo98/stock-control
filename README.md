@@ -42,4 +42,5 @@ npm install
 
 ## Login screen
 
-![stock](https://github.com/user-attachments/assets/f463c4f7-240c-441a-8fa9-0c1bde13cf62)
+![login2](https://github.com/user-attachments/assets/b9d7930c-7caa-4691-bb0a-8f1b255189ab)
+
