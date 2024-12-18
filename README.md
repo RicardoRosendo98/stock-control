@@ -40,7 +40,12 @@ Install project dependencies by running:
 npm install
 ```
 
-## Login screen
+## Criar login
 
-![login2](https://github.com/user-attachments/assets/b9d7930c-7caa-4691-bb0a-8f1b255189ab)
+![criando conta em ambiente local](https://github.com/user-attachments/assets/4c4fd5e1-07a7-4fbc-8ebc-45b77221f2f9)
+
+## Tela de login
+
+![autenticando o usuario](https://github.com/user-attachments/assets/d73bccb1-6223-4552-a37e-c4de338ed262)
+
 
