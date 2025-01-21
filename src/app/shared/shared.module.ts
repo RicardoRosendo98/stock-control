@@ -11,6 +11,7 @@ import { ToolbarNavigationComponent } from './Components/toolbar-navigation/tool
 
 
 
+
 @NgModule({
   declarations: [
     ToolbarNavigationComponent
@@ -23,7 +24,7 @@ import { ToolbarNavigationComponent } from './Components/toolbar-navigation/tool
     //PrimeNg
     ToolbarModule,
     CardModule,
-    ButtonModule
+    ButtonModule,
   ],
   exports:[ToolbarNavigationComponent],
   providers: [DialogService, CurrencyPipe]
