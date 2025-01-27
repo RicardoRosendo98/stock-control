@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { map, Observable } from 'rxjs';
+import { DeleteProductResponse } from 'src/app/models/interfaces/products/response/deleteProductResponse';
 import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
 import { environment } from 'src/environments/environment';
 
@@ -30,4 +31,17 @@ export class ProductsService {
     )
     .pipe(map((product) => product.filter((data) => data?.amount > 0)));
   }
+
+  deleteProduct(product_id: string): Observable<GetAllProductsResponse> {
+    return this.http.delete<GetAllProductsResponse>(
+      `${this.API_URL}/product/delete`,
+      {
+        ...this.httpOptions,
+        params: {
+          product_id: product_id,
+        }
+      }
+    );
+  }
+
 }
