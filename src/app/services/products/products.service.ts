@@ -2,7 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { map, Observable } from 'rxjs';
-import { DeleteProductResponse } from 'src/app/models/interfaces/products/response/deleteProductResponse';
+import { CreateProductRequest } from 'src/app/models/interfaces/products/request/CreateProductRequest';
+import { CreateProductResponse } from 'src/app/models/interfaces/products/response/CreateProductResponse';
+import { DeleteProductResponse } from 'src/app/models/interfaces/products/response/DeleteProductResponse';
 import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
 import { environment } from 'src/environments/environment';
 
@@ -11,10 +13,10 @@ import { environment } from 'src/environments/environment';
 })
 export class ProductsService {
   private API_URL = environment.API_URL;
-  private JWT_TOKEN = this.cookie.get('USER_INFO')
+  private JWT_TOKEN = this.cookie.get('USER_INFO');
   private httpOptions = {
     headers: new HttpHeaders({
-      'content-Type': 'applications/json',
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${this.JWT_TOKEN}`,
     }),
   };
@@ -32,8 +34,8 @@ export class ProductsService {
     .pipe(map((product) => product.filter((data) => data?.amount > 0)));
   }
 
-  deleteProduct(product_id: string): Observable<GetAllProductsResponse> {
-    return this.http.delete<GetAllProductsResponse>(
+  deleteProduct(product_id: string): Observable<DeleteProductResponse> {
+    return this.http.delete<DeleteProductResponse>(
       `${this.API_URL}/product/delete`,
       {
         ...this.httpOptions,
@@ -44,4 +46,13 @@ export class ProductsService {
     );
   }
 
+  createProduct(
+    requestDatas: CreateProductRequest
+  ): Observable<CreateProductResponse> {
+    return this.http.post<CreateProductResponse>(
+      `${this.API_URL}/product`,
+      requestDatas,
+      this.httpOptions
+    );
+  }
 }
