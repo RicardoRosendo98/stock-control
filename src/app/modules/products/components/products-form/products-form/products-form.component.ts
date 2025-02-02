@@ -15,6 +15,7 @@ import { EventAction } from 'src/app/models/interfaces/products/event/EventActio
 import { ProductsDataTransferService } from 'src/app/shared/services/products/products-data-transfer.service';
 import { ProductEvent } from 'src/app/models/enums/products/ProductEvent';
 import { EditProductResquest } from 'src/app/models/interfaces/products/request/EditProductRequest';
+import { SaleProductRequest } from 'src/app/models/interfaces/products/request/SaleProductRequest';
 
 
 @Component({
@@ -46,6 +47,13 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
     description: ['', Validators.required],
     amount: [0, Validators.required],
   });
+
+  public saleProductForm = this.formBuilder.group({
+    amount: [0, Validators.required],
+    product_id: ['', Validators.required]
+  });
+
+  public saleProductSelected!: GetAllProductsResponse;
 
 
   public addProductAction = ProductEvent.ADD_PRODUCT_EVENT;
@@ -162,6 +170,42 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
             life: 2500,
           });
           this.editProductForm.reset();
+        }
+      })
+    }
+  }
+
+  handleSubmitSaleProduct(): void {
+    if(this.saleProductForm?.value && this.saleProductForm?.valid) {
+      const requestDatas: SaleProductRequest = {
+        amount: this.saleProductForm.value?.amount as number,
+        product_id: this.saleProductForm.value?.product_id as string,
+      };
+
+      this.productsService
+      .saleProduct(requestDatas)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          if (response) {
+            this.messageService.add ({
+              severity: "success",
+              summary: "Sucesso",
+              detail: "Venda realizada com sucesso!",
+              life: 2500,
+            })
+            this.saleProductForm.reset();
+            this.getProductDatas();
+            this.router.navigate(['/dashboard']);
+          }
+        }, error:(err) => {
+          console.log(err);
+          this.messageService.add ({
+            severity: "error",
+            summary: "Erro",
+            detail: "Erro para realizar a venda",
+            life: 2500,
+          })
         }
       })
     }
