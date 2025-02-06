@@ -58,12 +58,21 @@
                 pButton
                 pRipple
                 icon="pi pi-pencil"
+                pTooltip="Editar"
+                tooltiPosition="top"
                 class="p-button-rounded p-button-warning"
+                (click)="handleCategoryEvent(
+                  EditCategoryAction,
+                  category?.id,
+                  category?.name
+                )"
                 ></button>
                 <button
                 pButton
                 pRipple
                 icon="pi pi-trash"
+                pTooltip="Excluir"
+                tooltiPosition="top"
                 class="p-button-rounded p-button-danger"
                 (click)="handleDeleteCategoryEvent(category?.id, category?.name )"
                 ></button>
