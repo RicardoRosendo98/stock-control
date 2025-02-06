@@ -31,7 +31,24 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.categoryAction = this.ref.data;
 
+    if (
+      (this.categoryAction?.event?.action === this.editCategoryAction &&
+         this.categoryAction?.event?.categoryName !== null) ||
+          undefined) {
+      this.setCategoryName(this.categoryAction?.event?.categoryName as string);
+    }
+  }
+
+  handleSubmitcategoryAction(): void {
+    if (this.categoryAction?.event?.action === this.addCategoryAction) {
+      this.handleSubmitAddCategory();
+    } else if (this.categoryAction?.event?.action === this.editCategoryAction) {
+      this.handleSubmitEditCategory();
+    }
+
+    return;
   }
 
   handleSubmitAddCategory(): void {
@@ -63,6 +80,50 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
             life: 2500,
           })
         }
+      })
+    }
+  }
+
+  handleSubmitEditCategory(): void {
+    if (
+      this.categoryForm?.value &&
+      this.categoryForm?.valid &&
+      this.categoryAction?.event?.id
+    ) {
+      const requestEditCategory: { name: string; category_id: string } ={
+        name: this.categoryForm?.value?.name as string,
+        category_id: this.categoryAction?.event?.id
+      }
+
+      this.categoriesService.editCategoryName(requestEditCategory)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.categoryForm.reset()
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Sucesso',
+            detail: 'Editado com Sucesso',
+            life: 2500,
+          })
+        }, error: (err) => {
+          console.log(err)
+          this.categoryForm.reset();
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao Editar categoria',
+            life: 2500,
+          })
+        }
+      })
+    }
+  }
+
+  setCategoryName(categoryName: string): void {
+    if (categoryName) {
+      this.categoryForm.setValue({
+        name:categoryName,
       })
     }
   }
