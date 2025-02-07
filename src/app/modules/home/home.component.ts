@@ -1,7 +1,7 @@
 import { MessageService } from 'primeng/api';
 import { CookieService } from 'ngx-cookie-service';
 
-import { Component, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { UserService } from 'src/app/services/user/user.service';
@@ -15,7 +15,10 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnDestroy{
+export class HomeComponent implements OnDestroy, AfterViewInit{
+  @ViewChild('emailInput') public emailInputRef!: ElementRef;
+  @ViewChild('passwordInput') public passawordInputRef!: ElementRef;
+
   private destroy$ = new Subject<void>();
   loginCard = true;
 
@@ -37,6 +40,14 @@ export class HomeComponent implements OnDestroy{
     private messageService: MessageService,
     private router: Router
   ) {}
+
+
+  ngAfterViewInit(): void {
+    this.emailInputRef.nativeElement.value = 'Exemple@email.com';
+    this.passawordInputRef.nativeElement.value = 'S3nhaC0D1fic@da';
+    console.log('EMAIL INPUT =>', this.emailInputRef.nativeElement);
+    console.log('PASSAWORD INPUT =>', this.passawordInputRef.nativeElement.value);
+  }
 
   onSubmitLoginForm(): void {
     if (this.loginForm.value && this.loginForm.valid) {
